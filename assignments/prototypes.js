@@ -15,6 +15,15 @@
   * destroy() // prototype method -> returns the string: 'Object was removed from the game.'
 */
 
+function GameObject(objectAttrs) {
+  this.createdAt = objectAttrs.createdAt;
+  this.dimensions = objectAttrs.dimensions;
+}
+
+GameObject.prototype.destroy = function() {
+  return (`${this} was removed from the game.`);
+}
+
 /*
   === CharacterStats ===
   * healthPoints
@@ -22,6 +31,22 @@
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats(charAttrs) {
+  this.healthPoints = charAttrs.healthPoints;
+  this.name = charAttrs.name;
+}
+
+CharacterStats.prototype.takeDamage = function() {
+  return (`${this.name} took damage.`);
+}
+
+function CharacterStats(charAttrs) {
+  CharacterStats.call(this, charAttrs);
+  this.destroy = charAttrs.destroy;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -32,6 +57,20 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+
+function Humanoid(humanAttrs) {
+  this.team = humanAttrs.team;
+  this.weapons = humanAttrs.weapons;
+  this.language = humanAttrs.language;
+}
+
+Humanoid.prototype.greet = function() {
+  return (`${this.name} offers a greeting in ${this.language}`);
+}
+
+
+
+
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
